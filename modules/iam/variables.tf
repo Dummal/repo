@@ -1,38 +1,50 @@
 variable "aft_lambda_execution_role_name" {
-  description = "The name of the IAM role for AFT Lambda functions to execute."
+  description = "Name of the IAM role for AFT Lambda functions to execute."
   type        = string
 }
 
-variable "aft_lambda_execution_policy_arn" {
-  description = "The ARN of the AWS-managed policy to attach to the AFT Lambda execution role."
+variable "aft_lambda_execution_role_policy" {
+  description = "Policy to attach to the AFT Lambda execution role."
   type        = string
-  default     = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  default     = "AWSLambdaBasicExecutionRole"
 }
 
 variable "aft_account_provisioning_role_name" {
-  description = "The name of the IAM role for AFT account provisioning operations in AWS Organizations."
+  description = "Name of the IAM role for AFT account provisioning operations."
   type        = string
 }
 
 variable "aft_account_provisioning_policy_name" {
-  description = "The name of the custom policy for AFT account provisioning."
+  description = "Name of the custom policy for AFT account provisioning."
   type        = string
   default     = "aft-account-provisioning-policy"
 }
 
+variable "aft_account_provisioning_policy_actions" {
+  description = "List of actions allowed by the AFT account provisioning policy."
+  type        = list(string)
+  default     = ["organizations:CreateAccount", "organizations:ListAccounts", "organizations:MoveAccount", "iam:CreateServiceLinkedRole"]
+}
+
 variable "aft_admin_role_name" {
-  description = "The name of the IAM Admin role for managing AFT."
+  description = "Name of the IAM Admin role for managing AFT."
   type        = string
 }
 
-variable "aft_admin_policy_arn" {
-  description = "The ARN of the AWS-managed policy to attach to the AFT admin role."
+variable "aft_admin_role_policy" {
+  description = "Policy to attach to the AFT Admin role."
   type        = string
-  default     = "arn:aws:iam::aws:policy/AdministratorAccess"
+  default     = "AdministratorAccess"
 }
 
-variable "master_account_id" {
-  description = "The account ID of the master account allowed to assume the AFT admin role."
+variable "aft_admin_role_mfa_required" {
+  description = "Indicates if MFA is required for the AFT Admin role."
+  type        = bool
+  default     = true
+}
+
+variable "aft_admin_role_trusted_account_id" {
+  description = "Account ID of the master account allowed to assume the AFT Admin role."
   type        = string
 }
 
@@ -46,19 +58,19 @@ variable "iam_resource_tags" {
 }
 
 variable "output_aft_execution_role_arn" {
-  description = "Whether to output the ARN of the AFT execution role."
+  description = "Output the ARN of the AFT Lambda execution role."
   type        = bool
   default     = true
 }
 
 variable "output_aft_account_provisioning_role_arn" {
-  description = "Whether to output the ARN of the AFT account provisioning role."
+  description = "Output the ARN of the AFT account provisioning role."
   type        = bool
   default     = true
 }
 
 variable "output_aft_admin_role_arn" {
-  description = "Whether to output the ARN of the AFT admin role."
+  description = "Output the ARN of the AFT Admin role."
   type        = bool
   default     = true
 }

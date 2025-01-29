@@ -66,7 +66,9 @@ variable "scp_policy_document" {
       Effect    = string
       Action    = list(string)
       Resource  = list(string)
-      Principal = map(string)
+      Principal = object({
+        AWS = string
+      })
     }))
   })
   default = {
@@ -95,21 +97,14 @@ variable "enable_control_tower" {
 }
 
 variable "master_account_email" {
-  type    = string
-  default = ""
+  type = string
 }
 
 variable "control_tower_region" {
-  type    = string
-  default = ""
+  type = string
 }
 
 variable "output_organization_ids" {
-  type    = bool
-  default = true
-}
-
-variable "manual_control_tower_setup" {
   type    = bool
   default = true
 }
